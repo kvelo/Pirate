@@ -40,11 +40,11 @@ VAR_GLOBAL
     BREST_SYSTEME_PC_SNCF_PA_Liaison_PC______PA : BOOL; // ENTREE
     BREST_SYSTEME_PA_SNCF_PA_Perte_Information : BOOL; // ENTREE
     BREST_SYSTEME_PC_SNCF_PA_Titulaire : BOOL; // ENTREE
-    BREST_IA6_Automatisme_Automat_Ouv+Bloc_Debloc_IA__Ouv_ : BOOL; // ENTREE
+    BREST_IA6_Automatisme_Automat_Ouv_PLUS_Bloc_Debloc_IA__Ouv_ : BOOL; // ENTREE // Nom PIRATE original : BREST_IA6_Automatisme_Automat_Ouv+Bloc_Debloc_IA__Ouv_
     BREST_IL2_Inter__de_ligne_25kv_V2 : BOOL; // ENTREE
     BREST_SA_Defaut_Chauffage_Commandes : BOOL; // SORTIE
     BREST_U_Cat__TT_IA6_Etat_tension_voie : BOOL; // SORTIE
-    BREST_IA1_Automatisme_Automat_Ouv+Bloc_Debloc_IA__Ouv_ : BOOL; // ENTREE
+    BREST_IA1_Automatisme_Automat_Ouv_PLUS_Bloc_Debloc_IA__Ouv_ : BOOL; // ENTREE // Nom PIRATE original : BREST_IA1_Automatisme_Automat_Ouv+Bloc_Debloc_IA__Ouv_
     BREST_IA6_Interrupteur_d_Alimentation__IA_ : BOOL; // ENTREE
     BREST_IL1_Inter__de_ligne_25kv_V1 : BOOL; // ENTREE
     BREST_SYSTEME_PC_SNCF_PA_Douteux_vu_du_PC : BOOL; // ENTREE
@@ -170,7 +170,7 @@ VAR_GLOBAL
     ST_MARC_SYSTEME_PC_SNCF_PA_Douteux_vu_du_PC : BOOL; // ENTREE
     ST_MARC_SAT2___25kV_Sect__alimentation_auto_transfo2 : BOOL; // ENTREE
     ST_MARC_S5_11_Sect__de_pontage_V1 : BOOL; // ENTREE
-    ST_MARC_IA3_Automatisme_Automat_Ouv+Bloc_Debloc_IA__Ouv_ : BOOL; // ENTREE
+    ST_MARC_IA3_Automatisme_Automat_Ouv_PLUS_Bloc_Debloc_IA__Ouv_ : BOOL; // ENTREE // Nom PIRATE original : ST_MARC_IA3_Automatisme_Automat_Ouv+Bloc_Debloc_IA__Ouv_
     ST_MARC_SYSTEME_PC_SNCF_PA_Liaison_PC______PA : BOOL; // ENTREE
     ST_MARC_AT2_Defaut_Auto_transfo_2 : BOOL; // SORTIE
     ST_MARC_Contrile_Local_Commande_locale_individuelle : BOOL; // ENTREE
