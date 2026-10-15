@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { useSimulation } from '../composables/useSimulation'
 const { equipements, defaut, defautActif, basculerDefaut } = useSimulation()
 
+// Chaque type précise la famille de cible pour adapter les listes proposées à l'utilisateur.
 const types = [
  { id:'Défaut équipement', detail:'Défaut simulé sur un équipement sélectionné', cible:'equipement' },
  { id:'Perte de communication', detail:'Perte de liaison simulée avec un poste', cible:'poste' },
@@ -12,6 +13,7 @@ const types = [
 
 // À renseigner uniquement avec les identifiants SEL validés. Maximum deux SEL par zone.
 const defautsEALEParZone = { '101': { Pencran: [ {id:'DL',nom:'Défaut DL'}, {id:'DB',nom:'Défaut DB'}, {id:'PC-PA',nom:'Défaut liaison PC-PA'} ] } }
+// Une chaîne vide signifie qu'aucun choix n'a encore été effectué.
 const sousStationEALE = ref('')
 const sousStationsEALE = Object.keys(defautsEALEParZone['101'])
 const cible = ref('')
@@ -31,9 +33,11 @@ const selITEParSecteur = {
  ]
 }
 const posteSelectionne = ref('')
+// Ces listes calculées suivent automatiquement les sélections de l'utilisateur.
 const equipementsDuPoste = computed(() => equipements.filter(e => e.poste === posteSelectionne.value))
 const typeCourant = computed(() => types.find(t => t.id === defaut.value) || types[0])
 const postes = computed(() => [...new Set(equipements.map(e => e.poste))])
+// Toutes les familles sont converties au même format { valeur, libelle } pour le select.
 const ciblesDisponibles = computed(() => {
  if (typeCourant.value.cible === 'equipement')
    return equipementsDuPoste.value.map(e => ({ valeur: String(e.id), libelle: `${e.repere} (ID ${e.id})` }))
@@ -45,6 +49,7 @@ const ciblesDisponibles = computed(() => {
    return postes.value.map(p => ({ valeur: p, libelle: p }))
  return []
 })
+// ?. lit une propriété seulement si l'objet existe ; || '' fournit un texte de repli.
 const libelleCible = computed(() => {
  const libelle = ciblesDisponibles.value.find(c => c.valeur === cible.value)?.libelle || ''
  if (typeCourant.value.cible === 'equipement' && libelle) return `${posteSelectionne.value} · ${libelle}`
@@ -53,12 +58,16 @@ const libelleCible = computed(() => {
  if (typeCourant.value.cible === 'eale' && libelle) return `${sousStationEALE.value} · ${libelle}`
  return libelle
 })
+// watch réagit à un changement : changer de catégorie efface les choix devenus inadaptés.
 watch(defaut, () => { posteSelectionne.value = ''; secteurITE.value = ''; sousStationEALE.value = ''; cible.value = '' })
 watch(sousStationEALE, () => { if (!defautActif.value) cible.value = '' })
 watch(secteurITE, () => { if (!defautActif.value) cible.value = '' })
 watch(posteSelectionne, () => { if (!defautActif.value) cible.value = '' })
+// Copie du résumé au moment de l'injection. Elle est locale à cet écran et disparaît
+// lorsqu'on le quitte, contrairement à defautActif qui appartient au composable partagé.
 const scenario = ref(null)
 function basculer() {
+ // À l'activation, exiger une cible et mémoriser son libellé ; au retrait, effacer le résumé.
  if (!defautActif.value) {
    if (!cible.value) return
    scenario.value = { defaut:defaut.value, cible:libelleCible.value }
@@ -68,6 +77,9 @@ function basculer() {
 }
 </script>
 <template>
+<!-- v-model relie un champ à une variable dans les deux sens : le choix modifie
+     la variable et la variable détermine le choix affiché. Pendant un défaut actif,
+     les champs sont désactivés pour conserver la configuration du scénario. -->
 <div class="heading">
  <div><h1>Simulation des défauts</h1><p class="muted">Configuration de scénarios pédagogiques · aucune action sur PIRATE ou CODESYS.</p></div>
  <span class="tag">États fictifs</span>

@@ -4,12 +4,16 @@ import { useSimulation } from '../composables/useSimulation'
 import { libelleFonction } from '../data/equipements'
 
 const { equipements, definirPositionNormale } = useSimulation()
+// Les compteurs dérivent des positions de référence, pas des positions actuelles.
+// Les références null (N/A) ne sont comptées ni parmi les ouverts ni parmi les fermés.
 const postes = computed(() => [...new Set(equipements.map(e => e.poste))])
 const nbOuverts = computed(() => equipements.filter(e => e.positionNormale === false).length)
 const nbFermes = computed(() => equipements.filter(e => e.positionNormale === true).length)
 </script>
 
 <template>
+<!-- {{ ... }} insère une valeur JavaScript dans le texte affiché.
+     Chaque poste possède son tableau ; changer une référence ne commande pas l'appareil. -->
   <div class="heading">
     <div>
       <h1>Positions normales des équipements</h1>
@@ -36,6 +40,8 @@ const nbFermes = computed(() => equipements.filter(e => e.positionNormale === tr
             <td>{{ libelleFonction(e) }}</td>
             <td><span :class="e.ferme ? 'state-closed' : 'state-open'">{{ e.ferme ? 'Fermé' : 'Ouvert' }}</span></td>
             <td>
+              <!-- Un select renvoie du texte : l'événement change le convertit ici en
+                   null, true ou false avant de sauvegarder la référence partagée. -->
               <select class="normal-select" :aria-label="'Position normale ' + poste + ' ' + e.repere"
                 :value="e.positionNormale === null ? 'na' : e.positionNormale ? 'ferme' : 'ouvert'"
                 @change="definirPositionNormale(e.id, $event.target.value === 'na' ? null : $event.target.value === 'ferme')">

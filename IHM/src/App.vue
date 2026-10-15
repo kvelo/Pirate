@@ -1,17 +1,28 @@
 <script setup>
+// Un fichier .vue associe la logique JavaScript (script) et l'affichage (template).
+// Avec « script setup », les imports et variables sont accessibles dans le template.
 import { ref } from 'vue'
 import ZoneOverview from './views/ZoneOverview.vue'
 import DefautsView from './views/DefautsView.vue'
 import PositionsNormalesView from './views/PositionsNormalesView.vue'
 import CommandeModal from './components/CommandeModal.vue'
 import { useSimulation } from './composables/useSimulation'
+// ref rend une valeur réactive : Vue actualise l'écran lorsqu'elle change.
+// Dans le JavaScript, on lit/écrit cette valeur avec .value ; le template s'en charge.
 const page = ref('overview')
+// null signifie qu'aucun équipement n'est sélectionné : la modale est alors fermée.
 const selection = ref(null)
 const { equipements } = useSimulation()
+// find recherche l'objet correspondant à l'identifiant reçu depuis la vue d'ensemble.
 function ouvrirEquipement(id) { selection.value = equipements.find(e => e.id === id) || null }
+// Changer d'écran ferme aussi la fenêtre de commande éventuellement ouverte.
 function changerPage(nom) { page.value = nom; selection.value = null }
 </script>
 <template>
+<!-- :class lie des classes CSS aux valeurs JavaScript ; @click écoute un clic.
+     v-if / v-else-if / v-else créent uniquement l'écran choisi (les autres sont démontés).
+     @select reçoit un événement enfant ; :equipement transmet une donnée à la modale.
+     @close remet la sélection à null et retire ainsi la modale de l'affichage. -->
 <div class="app" :class="{ 'app--fullscreen': page === 'overview' || page === 'faults' }">
 <header><div class="stripe"></div><div class="header"><b class="brand">PIRATE</b><strong>Zone 101 / Plounérin → Brest</strong><span class="chip amber">Simulation uniquement</span><span class="chip">Session de démonstration</span></div>
 <nav><button :class="{active:page==='overview'}" @click="changerPage('overview')">Vue d’ensemble · Zone 101</button><button :class="{active:page==='faults'}" @click="changerPage('faults')">Injection de défauts</button><button :class="{active:page==='normal'}" @click="changerPage('normal')">Positions normales</button></nav>

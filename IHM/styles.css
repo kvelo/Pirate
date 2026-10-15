@@ -1,3 +1,10 @@
+/* Feuille commune à tous les composants. Un sélecteur .nom cible class="nom".
+   Les variables --nom définies dans :root sont réutilisées avec var(--nom).
+   Flex organise principalement des lignes/colonnes ; Grid construit des grilles.
+   Les règles @media adaptent l'affichage à la taille de la fenêtre.
+   Plusieurs règles ciblent les mêmes éléments : la spécificité du sélecteur prime,
+   puis l'ordre du fichier départage les règles de même priorité.
+   La police ci-dessous est téléchargée ; Arial sert de repli si elle est indisponible. */
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 :root{--blue:#264fc4;--ink:#142337;--muted:#5c6878;--bg:#f3f6fa;--line:#dde4ee;--red:#b73c48;--green:#17684b}
 *{box-sizing:border-box}body{margin:0;background:#e9edf4;color:var(--ink);font-family:Manrope,Arial,sans-serif;font-size:14px}
