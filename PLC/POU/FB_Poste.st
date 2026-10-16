@@ -7,3 +7,18 @@ VAR
     // a dimensionner apres validation de la topologie.
 END_VAR
 // Aucun calcul de topologie interpostes dans ce bloc.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+END_FUNCTION_BLOCK

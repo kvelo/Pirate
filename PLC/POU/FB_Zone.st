@@ -7,3 +7,15 @@ VAR
     // connexions interpostes et generation du graphe.
     // Donnees reelles de topologie non integrees.
 END_VAR
+
+
+
+
+
+
+
+
+
+
+
+END_FUNCTION_BLOCK

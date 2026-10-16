@@ -17,6 +17,13 @@ en tant que DUT (TYPE), POU (FUNCTION_BLOCK) et GVL dans CODESYS.
 - La zone gere le graphe interpostes, les postes leurs equipements locaux.
 - La correspondance vers les variables PIRATE doit etre validee avant activation.
 
+## Interface du BFS
+- `ST_AreteZone.NoeudA/NoeudB` sont des indices dans le tableau des noeuds de la zone.
+- `EquipementIndex = -1` indique une liaison permanente ; sinon l'arete suit l'equipement correspondant.
+- Un equipement ne conduit que si `Ferme = TRUE` et `Defaut = FALSE`.
+- `Sources[i]` active le noeud d'indice `i` ; le resultat est ecrit dans `Noeuds[i].SousTension`.
+- Capacites actuelles de `FB_BFS` : 400 noeuds, 400 aretes et 120 equipements, a ajuster apres validation des topologies.
+
 ## Prochaines etapes
 1. Verifier la syntaxe et importer les DUT dans CODESYS.
 2. Dimensionner les collections apres validation de la topologie.

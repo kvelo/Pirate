@@ -3,3 +3,17 @@ VAR
     // Squelette d'adaptation des variables de supervision.
     // Mapping et polarites non verifies : aucune liaison active.
 END_VAR
+
+
+
+
+
+
+
+
+
+
+
+
+
+END_FUNCTION_BLOCK
