@@ -21,6 +21,13 @@ Les 57 noeuds comprennent 49 noeuds de zone, 6 internes Pencran et 2 points virt
 - Les 80 indices d'equipement sont donnes dans `Config/zone101_correspondances.csv`.
 - L'IHM Vue n'est pas modifiee ; aucune integration IHM/PLC n'est revendiquee.
 
+## POU de lecture et d'ecriture PIRATE
+- `POU/LireEntrees.st` : fonction autonome copiant les variables externes `GVL_PIRATE` vers `GVL_PIRATE_Interne.E_*`.
+- `POU/EcrireSorties.st` : fonction autonome recopiant `GVL_PIRATE_Interne.S_*` vers `GVL_PIRATE`.
+- Les méthodes originales de `FB_InterfacePIRATE` sont conservées pour référence mais il faut utiliser **une seule** voie de copie lors de l'exécution.
+- Pour les invoquer depuis un programme cyclique orchestrateur : `LectureOK := LireEntrees();` avant `FB_Zone`, puis `EcritureOK := EcrireSorties();` après. Les valeurs de retour servent uniquement à matérialiser l'appel ; elles ne valident ni transport, ni cohérence du mapping.
+- Les fonctions sont préparatoires ; aucun lien entre `E_*` et `Equipements[i].Ferme` ou entre `Noeuds[i].SousTension` et `S_*` n'est actuellement défini.
+
 ## Supprime
 `FB_Poste`, `PosteSSP`, `ST_Port`, `ST_RefNoeud`, `ST_ConnexionPorts`, `ST_Source` : objets du modele par poste, hors du graphe unique.
 
