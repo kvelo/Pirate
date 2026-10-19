@@ -1,7 +1,6 @@
 TYPE ST_Noeud :
 STRUCT
-    IdLocal : UINT;
-    IdZone : UINT; // affecte par FB_Zone
-    SousTension : BOOL; // resultat BFS
+    IdZone : UINT; // identifiant metier (1..57)
+    SousTension : BOOL; // resultat du parcours BFS
 END_STRUCT
 END_TYPE
