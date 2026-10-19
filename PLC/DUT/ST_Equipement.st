@@ -1,10 +1,8 @@
 TYPE ST_Equipement :
 STRUCT
-    Id : UINT; // identifiant local au poste
-    NoeudA : UINT; // noeud local
-    NoeudB : UINT; // noeud local
-    Ferme : BOOL;
-    Defaut : BOOL;
-    Conducteur : BOOL; // calcule, ne pas commander
+    Id : UINT; // identifiant unique dans la zone (1..80)
+    Ferme : BOOL; // commande ou position simulee
+    Defaut : BOOL; // indisponibilite : coupe la conduction
+    Conducteur : BOOL; // resultat calcule par FB_Zone
 END_STRUCT
 END_TYPE
