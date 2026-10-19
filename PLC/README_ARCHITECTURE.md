@@ -8,12 +8,12 @@ La simulation de la zone 101 repose sur deux blocs :
 Les 57 noeuds comprennent 49 noeuds de zone, 6 internes Pencran et 2 points virtuels d'injection amont des sectionneurs S11/S21. Les indices de tableau sont 0-based et les IDs metier 1-based.
 
 ## Structures conservees
-- `ST_Equipement` : Id, Ferme, Defaut, Conducteur. Les deux extremites de l'equipement sont stockees exclusivement dans `ST_AreteZone`.
+- `ST_Equipement` : Id, Ferme, Defaut, Asservi, Conducteur. Les deux extremites de l'equipement sont stockees exclusivement dans `ST_AreteZone`.
 - `ST_AreteZone` : NoeudA, NoeudB, EquipementIndex.
 - `ST_Noeud` : IdZone, SousTension.
 
 ## Convention
-`Conducteur = Ferme AND NOT Defaut`. Un equipement en defaut reste dans sa position mecanique simulee mais ne propage plus l'alimentation. Toutes les positions commencent ouvertes et les deux sources inactives. La valeur `Ferme` doit etre mise a jour depuis une interface de simulation **validee**.
+`Conducteur = Ferme AND NOT Defaut`. Le champ `Asservi : BOOL` est un indicateur de configuration : TRUE signifie que l'equipement doit etre soumis a une future logique d'asservissement ; il est initialise a FALSE pour les 80 equipements. Il ne constitue ni un ordre de manoeuvre, ni une autorisation, ni un blocage actif. Le BFS et la regle de conduction sont inchanges. Un equipement en defaut reste dans sa position mecanique simulee mais ne propage plus l'alimentation. Toutes les positions commencent ouvertes et les deux sources inactives. La valeur `Ferme` doit etre mise a jour depuis une interface de simulation **validee**.
 
 ## Interface
 - Les listes de variables `GVL_PIRATE` et `GVL_PIRATE_Interne` restent inchangees.
@@ -32,4 +32,4 @@ Les 57 noeuds comprennent 49 noeuds de zone, 6 internes Pencran et 2 points virt
 5. Ne jamais reinitialiser les donnees a chaque cycle.
 
 ## Limites
-Code non compile sur cible CODESYS dans cette intervention. Tester imports des types, appel des FB, propagation, defauts et activation des sources. Les dispositifs AT/TSA ne sont pas modelises comme continuites et les variables PIRATE ne sont pas encore associees ; ne pas utiliser pour un reseau reel.
+Les conditions d'asservissement, leurs dependances et leur mode de reaction restent a specifier et a implementer dans un bloc dedie. Code non compile sur cible CODESYS dans cette intervention. Tester imports des types, appel des FB, propagation, defauts et activation des sources. Les dispositifs AT/TSA ne sont pas modelises comme continuites et les variables PIRATE ne sont pas encore associees ; ne pas utiliser pour un reseau reel.
